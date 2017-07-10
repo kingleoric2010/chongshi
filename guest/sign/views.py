@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from sign.models import Event,Guest
+
 
 
 
@@ -30,8 +32,9 @@ def login_action(request):
 
 @login_required
 def event_manage(request):
+    event_list = Event.objects.all()
     username = request.session.get('user', '')
-    return render(request,"event_manage.html",{"user":username})
+    return render(request,"event_manage.html",{"user":username, "events":event_list })
     #username = request.COOKIES.get('user', '')
     #return render(request,"event_manage.html",{"user":username})
     #return render(request,"event_manage.html")
@@ -51,6 +54,3 @@ def logout(request):
 # 发布会管理（登录之后默认页面）
 @login_required
 '''
-
-
-
